@@ -10,25 +10,17 @@ import { useCreatePost } from "@/hooks/useCreatePost";
 import { PostSchema } from "@/lib/validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+import { Form } from "./ui/form";
 import type z from "zod";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import $axios from "@/http";
 import { toast } from "sonner";
 import { postStore } from "@/store/post.store";
+import { TextField } from "./forms/TextField";
+import { TextareaField } from "./forms/TextareaField";
+import { FileField } from "./forms/FileField";
 export function CreatePost() {
 	const { posts, setPosts } = postStore();
-	const [picture, setPicture] = useState<File | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const { isOpen, onClose } = useCreatePost();
 	const form = useForm<z.infer<typeof PostSchema>>({
@@ -40,17 +32,14 @@ export function CreatePost() {
 		},
 	});
 
-	function onFileChange(event: ChangeEvent<HTMLInputElement>) {
-		const file = event.target.files && event.target.files[0];
-		setPicture(file as File);
-	}
 	function onSubmit(values: z.infer<typeof PostSchema>) {
-		if (!picture) return null;
 		const formData = new FormData();
 		formData.append("title", values.title);
 		formData.append("subtitle", values.subtitle);
 		formData.append("description", values.description);
-		formData.append("picture", picture);
+		if (values.image) {
+			formData.append("picture", values.image);
+		}
 		setLoading(true);
 		const promise = $axios
 			.post("/article/create", formData)
@@ -81,72 +70,36 @@ export function CreatePost() {
 							onSubmit={form.handleSubmit(onSubmit)}
 							className='space-y-4 mt-6'
 						>
-							<FormField
+							<TextField
 								control={form.control}
 								name='title'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Title</FormLabel>
-										<FormControl>
-											<Input
-												placeholder='Title'
-												className='bg-secondary'
-												{...field}
-												disabled={loading}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
+								label='Title'
+								placeholder='Title'
+								disabled={loading}
 							/>
-
-							<FormField
+							<TextareaField
 								control={form.control}
 								name='description'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>description</FormLabel>
-										<FormControl>
-											<Input
-												placeholder='description'
-												className='bg-secondary'
-												{...field}
-												disabled={loading}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
+								label='Description'
+								placeholder='Description'
+								disabled={loading}
 							/>
-							<FormField
+							<TextField
 								control={form.control}
 								name='subtitle'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>subtitle</FormLabel>
-										<FormControl>
-											<Textarea
-												placeholder='subtitle'
-												className='bg-secondary'
-												{...field}
-												disabled={loading}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
+								label='subtitle'
+								placeholder='subtitle'
+								disabled={loading}
 							/>
 
-							<div>
-								<Label htmlFor='picture'>Picture</Label>
-								<Input
-									id='picture'
-									type='file'
-									className='bg-secondary'
-									onChange={onFileChange}
-									disabled={loading}
-								/>
-							</div>
+							<FileField
+								control={form.control}
+								name='image'
+								label='Picture'
+								accept='image/*'
+								disabled={loading}
+							/>
+
 							<Button type='submit' disabled={loading}>
 								{loading ? "Submiting..." : "Submit"}
 							</Button>
