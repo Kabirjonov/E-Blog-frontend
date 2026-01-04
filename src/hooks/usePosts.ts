@@ -1,9 +1,9 @@
 import $axios from "@/http";
 import { postStore } from "@/store/posts.store";
 import { useQuery } from "@tanstack/react-query";
-const { setPosts } = postStore();
 
 export function useGetPosts() {
+	const { setPosts } = postStore();
 	const { isLoading, error } = useQuery({
 		queryKey: ["get-posts"],
 		queryFn: async () => {

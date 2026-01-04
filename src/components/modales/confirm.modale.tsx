@@ -2,10 +2,12 @@ import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "../ui/button";
 export default function ConfirmModal() {
 	return (
 		<Dialog>
@@ -18,6 +20,10 @@ export default function ConfirmModal() {
 						account and remove your data from our servers.
 					</DialogDescription>
 				</DialogHeader>
+				<DialogFooter>
+					<Button variant={"destructive"}>Cancel</Button>
+					<Button>Continue</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);
