@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./mode-toggle";
-import { useCreatePost } from "@/hooks/useCreatePost";
+import { useConfirm } from "@/hooks/useConfirm";
 import { CreatePost } from "../create-post";
 
 export default function Navbar() {
-	const { onOpen } = useCreatePost();
+	const { onOpen } = useConfirm();
 	return (
 		<>
 			<div className='w-full h-24  fixed inset-0  shadow-sidebar-accent shadow-lg bg-background'>

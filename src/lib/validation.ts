@@ -16,5 +16,5 @@ export const authSchemaRegister = z.object({
 	username: z.string().min(2).max(30),
 	email: z.string().email(),
 	password: z.string().min(4).max(30),
-	image: z.instanceof(File).optional(),
+	image: z.instanceof(File),
 });

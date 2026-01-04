@@ -6,25 +6,25 @@ import {
 	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import type { Control, FieldValues, Path } from "react-hook-form";
+// import type { Control, FieldValues, Path } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 
-interface FileFieldProps<T extends FieldValues> {
-	control: Control<T>;
-	name: Path<T>;
+interface FileFieldProps {
+	control: any;
+	name: any;
 	label: string;
 	disabled?: boolean;
 	accept?: string;
 	className?: string;
 }
-export function FileField<T extends FieldValues>({
+export function FileField({
 	control,
 	name,
 	label,
 	disabled,
 	accept,
 	className,
-}: FileFieldProps<T>) {
+}: FileFieldProps) {
 	return (
 		<FormField
 			control={control}

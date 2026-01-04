@@ -6,7 +6,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/components/ui/sheet";
-import { useCreatePost } from "@/hooks/useCreatePost";
+import { useConfirm } from "@/hooks/useConfirm";
 import { PostSchema } from "@/lib/validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,14 +15,14 @@ import type z from "zod";
 import { useState } from "react";
 import $axios from "@/http";
 import { toast } from "sonner";
-import { postStore } from "@/store/post.store";
+import { postStore } from "@/store/posts.store";
 import { TextField } from "./forms/TextField";
 import { TextareaField } from "./forms/TextareaField";
 import { FileField } from "./forms/FileField";
 export function CreatePost() {
 	const { posts, setPosts } = postStore();
 	const [loading, setLoading] = useState<boolean>(false);
-	const { isOpen, onClose } = useCreatePost();
+	const { isOpen, onClose } = useConfirm();
 	const form = useForm<z.infer<typeof PostSchema>>({
 		resolver: zodResolver(PostSchema),
 		defaultValues: {
@@ -57,6 +57,7 @@ export function CreatePost() {
 			error: "Something want wrong",
 		});
 	}
+
 	return (
 		<Sheet open={isOpen} onOpenChange={onClose}>
 			<SheetContent>

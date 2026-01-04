@@ -6,10 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
-import { authStore } from "@/store/auth.store";
 import { AuthEnum } from "@/types/auth.type";
+import { useAuthStore } from "@/hooks/useAuth.store";
+
 export default function LoginAuth() {
-	const { setAuth } = authStore();
+	const { setAuth } = useAuthStore();
 	const form = useForm<z.infer<typeof authSchemaLogin>>({
 		resolver: zodResolver(authSchemaLogin),
 		defaultValues: {

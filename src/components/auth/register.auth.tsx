@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
-import { authStore } from "@/store/auth.store";
+import { useAuthStore } from "@/hooks/useAuth.store";
 import { AuthEnum } from "@/types/auth.type";
 import { FileField } from "../forms/FileField";
 
 export default function RegisterAuth() {
-	const { setAuth } = authStore();
+	const { setAuth } = useAuthStore();
 	const form = useForm<z.infer<typeof authSchemaRegister>>({
 		resolver: zodResolver(authSchemaRegister),
 		defaultValues: {
@@ -23,13 +23,6 @@ export default function RegisterAuth() {
 
 	function onSubmit(values: z.infer<typeof authSchemaRegister>) {
 		console.log(values);
-		const formData = new FormData();
-		formData.append("username", values.username);
-		formData.append("email", values.email);
-		formData.append("password", values.password);
-		if (values.image) {
-			formData.append("picture", values.image);
-		}
 	}
 	return (
 		<>
@@ -68,7 +61,7 @@ export default function RegisterAuth() {
 					/>
 					<FileField
 						control={form.control}
-						name='picture'
+						name={"picture"}
 						label='Avatar'
 						accept='image/*'
 					/>

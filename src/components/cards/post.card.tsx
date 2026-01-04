@@ -22,7 +22,6 @@ export default function PostCard({ post }: IProps) {
 				alt={post.title}
 				className='rounded-t-md h-70'
 			/>
-
 			<CardContent>
 				<CardTitle className='line-clamp-1 text-lg'>{post.title}</CardTitle>
 

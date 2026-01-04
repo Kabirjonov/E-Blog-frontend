@@ -6,7 +6,7 @@ type AuthStoreType = {
 	setAuth: (state: TAuthType) => void;
 };
 
-export const authStore = create<AuthStoreType>(set => ({
+export const useAuthStore = create<AuthStoreType>(set => ({
 	authState: AuthEnum.LOGIN,
 	setAuth: state => set({ authState: state }),
 }));
