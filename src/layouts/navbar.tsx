@@ -19,7 +19,6 @@ import { useLogout } from "@/hooks/useLogout";
 export default function Navbar() {
 	const { onOpen } = usePostCreate();
 	const user = authStore().user;
-
 	const isAuth = authStore().isAuth;
 	const isLoading = authStore().isLoading;
 	const logout = useLogout();

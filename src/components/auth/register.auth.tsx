@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { useAuthStore } from "@/store/useAuth";
 import { AuthEnum } from "@/types/auth.type";
 import { FileField } from "../forms/FileField";
-import { useAuthRegister } from "@/hooks/useAuthRegisterAndLogin";
+import { useAuthRegister } from "@/hooks/useAuth";
 import FillLoading from "../shared/fillLoading";
 
 export default function RegisterAuth() {

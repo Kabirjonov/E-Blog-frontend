@@ -8,7 +8,7 @@ import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
 import { AuthEnum } from "@/types/auth.type";
 import { useAuthStore } from "@/store/useAuth";
-import { useAuthLogin } from "@/hooks/useAuthRegisterAndLogin";
+import { useAuthLogin } from "@/hooks/useAuth";
 import FillLoading from "../shared/fillLoading";
 
 export default function LoginAuth() {
@@ -53,7 +53,13 @@ export default function LoginAuth() {
 						placeholder='Enter your Password'
 						disabled={isPending}
 					/>
-					<div className='w-full flex justify-end'>
+					<div className='w-full flex justify-between'>
+						<span
+							className='text-sm text-blue-500 hover:underline cursor-pointer'
+							onClick={() => setAuth(AuthEnum.FORGOTPASSWORD)}
+						>
+							Forgot-Password
+						</span>
 						<Button
 							size='lg'
 							variant='secondary'

@@ -18,3 +18,15 @@ export const authSchemaRegister = z.object({
 	password: z.string().min(4).max(30),
 	picture: z.instanceof(File).optional(),
 });
+export const emailSchema = z.object({
+	email: z.string().email(),
+});
+export const passwordSchema = z
+	.object({
+		password: z.string().min(4).max(30),
+		confirmPassword: z.string().min(4).max(30),
+	})
+	.refine(data => data.confirmPassword === data.password, {
+		message: "Password is not match",
+		path: ["confirmPassword"],
+	});

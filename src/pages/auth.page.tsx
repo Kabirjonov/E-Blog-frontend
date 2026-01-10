@@ -1,3 +1,4 @@
+import ForgotPassword from "@/components/auth/forgot.auth";
 import LoginAuth from "@/components/auth/login.auth";
 import RegisterAuth from "@/components/auth/register.auth";
 import { Card } from "@/components/ui/card";
@@ -20,6 +21,7 @@ export default function AuthPage() {
 			<Card className='w-1/3 p-6 bg-secondary '>
 				{authState === AuthEnum.LOGIN && <LoginAuth />}
 				{authState === AuthEnum.REGISTER && <RegisterAuth />}
+				{authState === AuthEnum.FORGOTPASSWORD && <ForgotPassword />}
 			</Card>
 		</div>
 	);

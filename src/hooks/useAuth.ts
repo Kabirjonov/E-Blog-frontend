@@ -1,6 +1,11 @@
 import $axios from "@/http";
 import { setItem } from "@/lib/manage-localstory";
-import type { authSchemaLogin, authSchemaRegister } from "@/lib/validation";
+import type {
+	authSchemaLogin,
+	authSchemaRegister,
+	emailSchema,
+	passwordSchema,
+} from "@/lib/validation";
 import { authStore } from "@/store/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +64,54 @@ export function useAuthLogin() {
 			setUser(user);
 			setItem("x-token", accessToken);
 			navigate("/");
+		},
+		onError: error => {
+			console.log(error);
+			toast.error(error.message);
+		},
+	});
+	return { mutate, isPending };
+}
+export function useForgotPassword() {
+	const { mutate, isPending } = useMutation({
+		mutationKey: ["auth-forgot-password"],
+		mutationFn: async (values: z.infer<typeof emailSchema>) => {
+			const formData = new FormData();
+			formData.append("email", values.email);
+			const response = await $axios.post("/auth/forgot-password", formData);
+			return response;
+		},
+		onSuccess: data => {
+			toast.success(data.message);
+		},
+		onError: error => {
+			console.log(error);
+			toast.error(error.message);
+		},
+	});
+	return { mutate, isPending };
+}
+interface ResetPasswordPayload {
+	values: z.infer<typeof passwordSchema>;
+	token: string;
+}
+
+export function useResetPassword() {
+	const navigate = useNavigate();
+	const { mutate, isPending } = useMutation({
+		mutationKey: ["auth-reset-password"],
+		mutationFn: async ({ values, token }: ResetPasswordPayload) => {
+			const formData = new FormData();
+			formData.append("password", values.password);
+			const response = await $axios.post(
+				`/auth/reset-password/${token}`,
+				formData
+			);
+			return response;
+		},
+		onSuccess: data => {
+			toast.success(data.message);
+			navigate("/auth");
 		},
 		onError: error => {
 			console.log(error);

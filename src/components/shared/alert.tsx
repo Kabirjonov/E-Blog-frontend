@@ -9,10 +9,7 @@ export default function AlertComponent({ error }: Prop) {
 			<Alert variant='destructive'>
 				<AlertTitle>Error</AlertTitle>
 				<AlertDescription>
-					<p>{error?.name}</p>
-					<ul className='list-inside list-disc text-sm'>
-						<li>{error?.message}</li>
-					</ul>
+					<p>{error?.message}</p>
 				</AlertDescription>
 			</Alert>
 		</>

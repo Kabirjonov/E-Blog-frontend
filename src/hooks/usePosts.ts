@@ -85,7 +85,6 @@ export function useDeletePost() {
 		},
 		onSuccess: data => {
 			console.log("data useDeletePost", data);
-
 			const newData = posts.filter(c => c._id !== post._id);
 			toast.success(data.message);
 			setPosts(newData);
