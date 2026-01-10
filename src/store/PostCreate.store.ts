@@ -5,7 +5,7 @@ type CreatePostStore = {
 	onOpen: () => void;
 	onClose: () => void;
 };
-export const useConfirm = create<CreatePostStore>(set => ({
+export const usePostCreate = create<CreatePostStore>(set => ({
 	isOpen: false,
 	onOpen: () => set({ isOpen: true }),
 	onClose: () => set({ isOpen: false }),

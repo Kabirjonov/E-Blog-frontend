@@ -1,7 +1,5 @@
-export const ROLES = {
-	USER: "user",
-	ADMIN: "admin",
-} as const;
+import type { ROLES } from "@/constants/roles";
+
 export interface IUser {
 	_id: string;
 	username: string;

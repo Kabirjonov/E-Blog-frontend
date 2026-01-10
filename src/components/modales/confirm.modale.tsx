@@ -5,14 +5,21 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import { useConfirm } from "@/store/useConfirm";
+import { useDeletePost } from "@/hooks/usePosts";
+import AlertComponent from "../shared/alert";
+import FillLoading from "../shared/fillLoading";
 export default function ConfirmModal() {
+	const { isOpen, onClose } = useConfirm();
+	const { error, mutate, isPending } = useDeletePost();
+
 	return (
-		<Dialog>
-			<DialogTrigger>Open</DialogTrigger>
+		<Dialog open={isOpen} onOpenChange={onClose}>
 			<DialogContent>
+				{error && <AlertComponent error={error} />}
+				{isPending && <FillLoading />}
 				<DialogHeader>
 					<DialogTitle>Are you absolutely sure?</DialogTitle>
 					<DialogDescription>
@@ -21,8 +28,15 @@ export default function ConfirmModal() {
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
-					<Button variant={"destructive"}>Cancel</Button>
-					<Button>Continue</Button>
+					<Button onClick={onClose}>Cancel</Button>
+
+					<Button
+						variant={"destructive"}
+						onClick={() => mutate()}
+						disabled={isPending}
+					>
+						{isPending ? "Deleting..." : "Continue"}
+					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

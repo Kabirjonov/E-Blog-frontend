@@ -6,12 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
-import { useAuthStore } from "@/hooks/useAuth.store";
+import { useAuthStore } from "@/store/useAuth";
 import { AuthEnum } from "@/types/auth.type";
 import { FileField } from "../forms/FileField";
+import { useAuthRegister } from "@/hooks/useAuthRegisterAndLogin";
+import FillLoading from "../shared/fillLoading";
 
 export default function RegisterAuth() {
 	const { setAuth } = useAuthStore();
+	const { mutate, isPending } = useAuthRegister();
 	const form = useForm<z.infer<typeof authSchemaRegister>>({
 		resolver: zodResolver(authSchemaRegister),
 		defaultValues: {
@@ -22,10 +25,11 @@ export default function RegisterAuth() {
 	});
 
 	function onSubmit(values: z.infer<typeof authSchemaRegister>) {
-		console.log(values);
+		mutate(values);
 	}
 	return (
 		<>
+			{isPending && <FillLoading />}
 			<h1 className='text-2xl font-bold'>Register</h1>
 			<p className='text-md text-muted-foreground'>
 				Do you already have account?
@@ -43,31 +47,37 @@ export default function RegisterAuth() {
 						name='username'
 						label='UserName'
 						placeholder='Enter your UserName'
-						disabled={false}
+						disabled={isPending}
 					/>
 					<TextField
 						control={form.control}
 						name='email'
 						label='Email'
 						placeholder='Enter your Email'
-						disabled={false}
+						disabled={isPending}
 					/>
 					<PasswordField
 						control={form.control}
 						name='password'
 						label='Password'
 						placeholder='Enter your Password'
-						disabled={false}
+						disabled={isPending}
 					/>
 					<FileField
 						control={form.control}
 						name={"picture"}
 						label='Avatar'
 						accept='image/*'
+						disabled={isPending}
 					/>
 					<div className='w-full flex justify-end'>
-						<Button size='lg' variant='secondary'>
-							Subit
+						<Button
+							size='lg'
+							disabled={isPending}
+							variant='secondary'
+							type='submit'
+						>
+							{isPending ? "Submiting..." : "Submit"}
 						</Button>
 					</div>
 				</form>

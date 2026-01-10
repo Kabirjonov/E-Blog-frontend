@@ -7,22 +7,26 @@ import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
 import { AuthEnum } from "@/types/auth.type";
-import { useAuthStore } from "@/hooks/useAuth.store";
+import { useAuthStore } from "@/store/useAuth";
+import { useAuthLogin } from "@/hooks/useAuthRegisterAndLogin";
+import FillLoading from "../shared/fillLoading";
 
 export default function LoginAuth() {
 	const { setAuth } = useAuthStore();
+	const { mutate, isPending } = useAuthLogin();
 	const form = useForm<z.infer<typeof authSchemaLogin>>({
 		resolver: zodResolver(authSchemaLogin),
 		defaultValues: {
-			email: "",
-			password: "",
+			email: "alex1234@gmail.com",
+			password: "123456",
 		},
 	});
 	function onSubmit(values: z.infer<typeof authSchemaLogin>) {
-		console.log(values);
+		mutate(values);
 	}
 	return (
 		<>
+			{isPending && <FillLoading />}
 			<h1 className='text-2xl font-bold'>Login</h1>
 			<p className='text-md text-muted-foreground'>
 				Don't have an account?
@@ -40,18 +44,23 @@ export default function LoginAuth() {
 						name='email'
 						label='Email'
 						placeholder='Enter your Email'
-						disabled={false}
+						disabled={isPending}
 					/>
 					<PasswordField
 						control={form.control}
 						name='password'
 						label='Password'
 						placeholder='Enter your Password'
-						disabled={false}
+						disabled={isPending}
 					/>
 					<div className='w-full flex justify-end'>
-						<Button size='lg' variant='secondary'>
-							Subit
+						<Button
+							size='lg'
+							variant='secondary'
+							disabled={isPending}
+							type='submit'
+						>
+							{isPending ? "Submiting..." : "Submit"}
 						</Button>
 					</div>
 				</form>

@@ -1,4 +1,4 @@
-import { router } from "@/app/router";
+import { router } from "@/pages/router";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./thema.provider";
 import { Toaster } from "sonner";
