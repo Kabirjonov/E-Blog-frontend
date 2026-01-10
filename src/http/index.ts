@@ -1,6 +1,6 @@
 import { deleteItem, getItem, setItem } from "@/lib/manage-localstory";
 import axios from "axios";
-export const API_URL = "http://localhost:8000";
+export const API_URL = import.meta.env.BACKAND_API;
 
 const $axios = axios.create({
 	withCredentials: true,
