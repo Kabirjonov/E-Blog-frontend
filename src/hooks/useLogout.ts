@@ -1,8 +1,9 @@
-import $axios from "@/http";
+import api from "@/http/api";
 import { deleteItem } from "@/lib/manage-localstory";
-import { authStore } from "@/store/auth.store";
+import { authStore } from "@/stores/auth.store";
 import type { IUser } from "@/types/user.type";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const useLogout = () => {
 	const navigate = useNavigate();
@@ -11,8 +12,7 @@ export const useLogout = () => {
 	const logout = async () => {
 		setIsLoading(true);
 		try {
-			await $axios.post("/auth/logout");
-
+			await api.post("/auth/logout");
 			setIsAuth(false);
 			setUser({} as IUser);
 			deleteItem("x-token");

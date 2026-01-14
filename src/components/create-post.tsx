@@ -14,7 +14,7 @@ import type z from "zod";
 import { TextField } from "./forms/TextField";
 import { TextareaField } from "./forms/TextareaField";
 import { FileField } from "./forms/FileField";
-import { usePostCreate } from "@/store/PostCreate.store";
+import { usePostCreate } from "@/stores/PostCreate.store";
 import { useCreatePost } from "@/hooks/usePosts";
 export function CreatePost() {
 	const createPost = useCreatePost();

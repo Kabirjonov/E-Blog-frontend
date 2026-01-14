@@ -3,7 +3,7 @@ import LoginAuth from "@/components/auth/login.auth";
 import RegisterAuth from "@/components/auth/register.auth";
 import { Card } from "@/components/ui/card";
 import { getItem } from "@/lib/manage-localstory";
-import { useAuthStore } from "@/store/useAuth";
+import { useAuthStore } from "@/stores/authPage.store";
 import { AuthEnum } from "@/types/auth.type";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

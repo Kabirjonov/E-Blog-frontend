@@ -1,9 +1,10 @@
 import PostCard from "@/components/cards/post.card";
 import ConfirmModal from "@/components/modales/confirm.modale";
+import { PaginationDemo } from "@/components/pagination";
 import AlertComponent from "@/components/shared/alert";
 import PostCardLoading from "@/components/shared/post.loading";
 import { useGetPosts } from "@/hooks/usePosts";
-import { postStore } from "@/store/posts.store";
+import { postStore } from "@/stores/posts.store";
 import type { IPost } from "@/types/article.type";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
 				</div>
 			</div>
 			<ConfirmModal />
+			<PaginationDemo />
 		</>
 	);
 }

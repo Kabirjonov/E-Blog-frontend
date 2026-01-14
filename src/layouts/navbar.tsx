@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { ModeToggle } from "../components/shared/mode-toggle";
 import { CreatePost } from "../components/create-post";
-import { usePostCreate } from "@/store/PostCreate.store";
-import { authStore } from "@/store/auth.store";
+import { usePostCreate } from "@/stores/PostCreate.store";
+import { authStore } from "@/stores/auth.store";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import {
 	DropdownMenu,

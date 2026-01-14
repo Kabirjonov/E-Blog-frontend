@@ -7,4 +7,6 @@ export interface IPost {
 	description: string;
 	auther: IUser;
 	picture: string[];
+	createdAt: Date;
+	updateAt: Date;
 }

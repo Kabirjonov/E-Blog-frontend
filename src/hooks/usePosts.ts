@@ -1,23 +1,43 @@
 import $axios from "@/http";
-import { postStore } from "@/store/posts.store";
+import { postStore } from "@/stores/posts.store";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useConfirm } from "../store/useConfirm";
+import { useConfirm } from "../stores/useConfirm";
 import { toast } from "sonner";
 import type { PostSchema } from "@/lib/validation";
 import z from "zod";
 import type { IPost } from "@/types/article.type";
+import type { IResponse$Axios } from "@/types/axiosBody.type";
+
+import api from "@/http/api";
+import { useParams } from "react-router-dom";
 
 export function useGetPosts() {
 	const { setPosts } = postStore();
 	const { isLoading, error } = useQuery({
 		queryKey: ["get-posts"],
 		queryFn: async () => {
-			const { body } = await $axios.get("/article/getAll");
-			setPosts(body);
-			return body;
+			const res = await $axios.get<IResponse$Axios<IPost[]>>("/article/getAll");
+			console.log("res.data.body", res);
+			setPosts(res.data.body);
+			return res.data.body;
 		},
 	});
 	return { isLoading, error };
+}
+export function useGetPostById() {
+	const { id } = useParams<{ id: string }>();
+	return useQuery({
+		queryKey: ["getPostById", id],
+		enabled: !!id,
+		queryFn: async () => {
+			const res = await $axios.get<IResponse$Axios<IPost>>(
+				`/article/getById/${id}`
+			);
+			console.log(res.data.body);
+
+			return res.data.body;
+		},
+	});
 }
 export function useCreatePost() {
 	const { posts, setPosts } = postStore();
@@ -30,8 +50,11 @@ export function useCreatePost() {
 			formData.append("subtitle", values.subtitle);
 			formData.append("description", values.description);
 			formData.append("picture", values.picture);
-			const body = await $axios.post("/article/create", formData);
-			return body;
+			const res = await api.post<IResponse$Axios<IPost>>(
+				"/article/create",
+				formData
+			);
+			return res.data;
 		},
 
 		onSuccess: newPost => {
@@ -56,18 +79,20 @@ export function useEditPost(post: IPost) {
 			formData.append("subtitle", values.subtitle);
 			formData.append("description", values.description);
 			if (values.picture) formData.append("picture", values.picture);
-			const response = await $axios.put(`/article/edit/${post._id}`, formData);
+			const res = await api.put<IResponse$Axios<IPost>>(
+				`/article/edit/${post._id}`,
+				formData
+			);
 
-			return response;
+			return res.data;
 		},
 		onSuccess: updatedPost => {
-			console.log("useEditPost onSeccess", updatedPost);
 			const newPost = updatedPost.body;
 			const updatedPosts = posts.map(p =>
 				p._id === newPost._id ? newPost : p
 			);
 			setPosts(updatedPosts);
-			toast.success("Post updated successfully");
+			toast.success(updatedPost.message);
 		},
 		onError: error => {
 			toast.error(error.message);
@@ -80,11 +105,12 @@ export function useDeletePost() {
 	const { error, mutate, isPending } = useMutation({
 		mutationKey: ["delete-post"],
 		mutationFn: async () => {
-			const response = await $axios.delete(`/article/delete/${post._id}`);
-			return response;
+			const res = await api.delete<IResponse$Axios<IPost>>(
+				`/article/delete/${post._id}`
+			);
+			return res.data;
 		},
 		onSuccess: data => {
-			console.log("data useDeletePost", data);
 			const newData = posts.filter(c => c._id !== post._id);
 			toast.success(data.message);
 			setPosts(newData);

@@ -6,7 +6,7 @@ import type {
 	emailSchema,
 	passwordSchema,
 } from "@/lib/validation";
-import { authStore } from "@/store/auth.store";
+import { authStore } from "@/stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -25,8 +25,8 @@ export function useAuthRegister() {
 			formData.append("password", values.password);
 			formData.append("username", values.username);
 			if (values.picture) formData.append("picture", values.picture);
-			const response = await $axios.post("/auth/register", formData);
-			return response;
+			const res = await $axios.post("/auth/register", formData);
+			return res.data;
 		},
 
 		onSuccess: data => {
@@ -54,8 +54,8 @@ export function useAuthLogin() {
 			const formData = new FormData();
 			formData.append("email", values.email);
 			formData.append("password", values.password);
-			const register = await $axios.post("/auth/login", formData);
-			return register;
+			const res = await $axios.post("/auth/login", formData);
+			return res.data;
 		},
 		onSuccess: data => {
 			const { user, accessToken } = data.body;
@@ -78,8 +78,8 @@ export function useForgotPassword() {
 		mutationFn: async (values: z.infer<typeof emailSchema>) => {
 			const formData = new FormData();
 			formData.append("email", values.email);
-			const response = await $axios.post("/auth/forgot-password", formData);
-			return response;
+			const res = await $axios.post("/auth/forgot-password", formData);
+			return res.data;
 		},
 		onSuccess: data => {
 			toast.success(data.message);
@@ -103,11 +103,8 @@ export function useResetPassword() {
 		mutationFn: async ({ values, token }: ResetPasswordPayload) => {
 			const formData = new FormData();
 			formData.append("password", values.password);
-			const response = await $axios.post(
-				`/auth/reset-password/${token}`,
-				formData
-			);
-			return response;
+			const res = await $axios.post(`/auth/reset-password/${token}`, formData);
+			return res.data;
 		},
 		onSuccess: data => {
 			toast.success(data.message);

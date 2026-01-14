@@ -1,6 +1,6 @@
-import $axios from "@/http";
+import api from "@/http/api";
 import { getItem, setItem } from "@/lib/manage-localstory";
-import { authStore } from "@/store/auth.store";
+import { authStore } from "@/stores/auth.store";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -10,13 +10,13 @@ export const useCheckAuth = () => {
 		const checkAuth = async () => {
 			setIsLoading(true);
 			try {
-				const { body } = await $axios.get("/auth/refresh");
-				setItem("x-token", body.accessToken);
+				const res = await api.get("/auth/refresh");
+				setItem("x-token", res.data.body.accessToken);
 				setIsAuth(true);
-				setUser(body.user);
+				setUser(res.data.body);
 			} catch (error) {
 				console.log(error);
-				toast.error(error.message);
+				toast.error(error.data.message);
 			} finally {
 				setIsLoading(false);
 			}

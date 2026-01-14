@@ -7,7 +7,7 @@ import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
 import { AuthEnum } from "@/types/auth.type";
-import { useAuthStore } from "@/store/useAuth";
+import { useAuthStore } from "@/stores/authPage.store";
 import { useAuthLogin } from "@/hooks/useAuth";
 import FillLoading from "../shared/fillLoading";
 

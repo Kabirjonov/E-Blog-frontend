@@ -7,7 +7,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import { useConfirm } from "@/store/useConfirm";
+import { useConfirm } from "@/stores/useConfirm";
 import { useDeletePost } from "@/hooks/usePosts";
 import AlertComponent from "../shared/alert";
 import FillLoading from "../shared/fillLoading";

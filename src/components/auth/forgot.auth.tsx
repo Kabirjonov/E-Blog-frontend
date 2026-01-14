@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import type z from "zod";
 import { useForm } from "react-hook-form";
 import { useForgotPassword } from "@/hooks/useAuth";
-import { useAuthStore } from "@/store/useAuth";
+import { useAuthStore } from "@/stores/authPage.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FillLoading from "../shared/fillLoading";
 import { AuthEnum } from "@/types/auth.type";

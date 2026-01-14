@@ -10,7 +10,7 @@ import {
 import { Button } from "../ui/button";
 import { API_URL } from "@/http";
 import { Link } from "react-router-dom";
-import { useConfirm } from "@/store/useConfirm";
+import { useConfirm } from "@/stores/useConfirm";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { EditPopers } from "../modales/editpoper";
 import { useState } from "react";
@@ -42,7 +42,7 @@ export default function PostCard({ post }: IProps) {
 					{post.subtitle}
 				</CardTitle>
 				<CardAction className='mt-3'>
-					<Link to={post._id} className='underline'>
+					<Link to={`/post/${post._id}`} className='underline'>
 						Show More
 					</Link>
 				</CardAction>

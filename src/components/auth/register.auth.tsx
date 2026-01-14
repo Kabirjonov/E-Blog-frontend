@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "../forms/TextField";
 import { PasswordField } from "../forms/PasswordField";
 import { Button } from "../ui/button";
-import { useAuthStore } from "@/store/useAuth";
+import { useAuthStore } from "@/stores/authPage.store";
 import { AuthEnum } from "@/types/auth.type";
 import { FileField } from "../forms/FileField";
 import { useAuthRegister } from "@/hooks/useAuth";
