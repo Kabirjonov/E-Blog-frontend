@@ -4,27 +4,16 @@ import {
 	CardAction,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardTitle,
 } from "../ui/card";
-import { Button } from "../ui/button";
 import { API_URL } from "@/http";
 import { Link } from "react-router-dom";
-import { useConfirm } from "@/stores/useConfirm";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { EditPopers } from "../modales/editpoper";
-import { useState } from "react";
+import CardFooterComponent from "./cardFooter";
 
 interface IProps {
 	post: IPost;
 }
 export default function PostCard({ post }: IProps) {
-	const { onOpen, setPost } = useConfirm();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const onDelete = () => {
-		onOpen();
-		setPost(post);
-	};
 	return (
 		<Card>
 			<img
@@ -47,19 +36,7 @@ export default function PostCard({ post }: IProps) {
 					</Link>
 				</CardAction>
 			</CardContent>
-			<CardFooter className='flex justify-between'>
-				<Popover onOpenChange={() => setIsOpen(!isOpen)}>
-					<PopoverTrigger asChild>
-						<Button variant='secondary'>Edit</Button>
-					</PopoverTrigger>
-					<PopoverContent>
-						<EditPopers post={post} setisOpen={setIsOpen} />
-					</PopoverContent>
-				</Popover>
-				<Button variant={"destructive"} onClick={onDelete}>
-					Delete
-				</Button>
-			</CardFooter>
+			<CardFooterComponent post={post} />
 		</Card>
 	);
 }

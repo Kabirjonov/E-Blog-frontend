@@ -7,3 +7,8 @@ export interface IUser {
 	picture: string[];
 	role: typeof ROLES;
 }
+export interface IUserAuth {
+	user: IUser;
+	accessToken: string;
+	refreshToken: string;
+}

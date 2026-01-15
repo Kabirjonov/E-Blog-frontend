@@ -7,6 +7,8 @@ import type {
 	passwordSchema,
 } from "@/lib/validation";
 import { authStore } from "@/stores/auth.store";
+import type { IResponse$Axios } from "@/types/axiosBody.type";
+import type { IUserAuth } from "@/types/user.type";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -25,7 +27,10 @@ export function useAuthRegister() {
 			formData.append("password", values.password);
 			formData.append("username", values.username);
 			if (values.picture) formData.append("picture", values.picture);
-			const res = await $axios.post("/auth/register", formData);
+			const res = await $axios.post<IResponse$Axios<IUserAuth>>(
+				"/auth/register",
+				formData
+			);
 			return res.data;
 		},
 
@@ -54,7 +59,10 @@ export function useAuthLogin() {
 			const formData = new FormData();
 			formData.append("email", values.email);
 			formData.append("password", values.password);
-			const res = await $axios.post("/auth/login", formData);
+			const res = await $axios.post<IResponse$Axios<IUserAuth>>(
+				"/auth/login",
+				formData
+			);
 			return res.data;
 		},
 		onSuccess: data => {

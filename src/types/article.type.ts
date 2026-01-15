@@ -10,3 +10,9 @@ export interface IPost {
 	createdAt: Date;
 	updateAt: Date;
 }
+export interface IPaginatedResponse<T> {
+	data: T;
+	page: number;
+	limit: number;
+	total: number;
+}

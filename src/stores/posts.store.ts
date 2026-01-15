@@ -6,21 +6,24 @@ type PostStoreType = {
 	limit: number;
 	page: number;
 	total: number;
+	setPage: (page: number) => void;
 	setTotal: (total: number) => void;
 };
-
-interface IgetByIdPost {
-	setByIdPost: (post: IPost) => void;
-	post: IPost;
-}
 export const postStore = create<PostStoreType>(set => ({
 	posts: [],
 	setPosts: posts => set({ posts }),
 	limit: 9,
 	page: 1,
 	total: 0,
+
+	setPage: page => set({ page }),
 	setTotal: total => set({ total }),
 }));
+
+interface IgetByIdPost {
+	setByIdPost: (post: IPost) => void;
+	post: IPost;
+}
 
 export const GetPostById = create<IgetByIdPost>(set => ({
 	post: {} as IPost,

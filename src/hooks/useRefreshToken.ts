@@ -1,8 +1,9 @@
 import api from "@/http/api";
 import { getItem, setItem } from "@/lib/manage-localstory";
 import { authStore } from "@/stores/auth.store";
+import type { IResponse$Axios } from "@/types/axiosBody.type";
+import type { IUserAuth } from "@/types/user.type";
 import { useEffect } from "react";
-import { toast } from "sonner";
 
 export const useCheckAuth = () => {
 	const { setIsAuth, setIsLoading, setUser } = authStore();
@@ -10,13 +11,13 @@ export const useCheckAuth = () => {
 		const checkAuth = async () => {
 			setIsLoading(true);
 			try {
-				const res = await api.get("/auth/refresh");
+				const res = await api.get<IResponse$Axios<IUserAuth>>("/auth/refresh");
 				setItem("x-token", res.data.body.accessToken);
 				setIsAuth(true);
-				setUser(res.data.body);
+				console.log(res.data);
+				setUser(res.data.body.user);
 			} catch (error) {
 				console.log(error);
-				toast.error(error.data.message);
 			} finally {
 				setIsLoading(false);
 			}

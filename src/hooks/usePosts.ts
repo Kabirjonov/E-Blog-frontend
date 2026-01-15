@@ -5,20 +5,28 @@ import { useConfirm } from "../stores/useConfirm";
 import { toast } from "sonner";
 import type { PostSchema } from "@/lib/validation";
 import z from "zod";
-import type { IPost } from "@/types/article.type";
+import type { IPaginatedResponse, IPost } from "@/types/article.type";
 import type { IResponse$Axios } from "@/types/axiosBody.type";
-
 import api from "@/http/api";
 import { useParams } from "react-router-dom";
 
 export function useGetPosts() {
-	const { setPosts } = postStore();
+	const { setPosts, setTotal, page, limit } = postStore();
 	const { isLoading, error } = useQuery({
-		queryKey: ["get-posts"],
+		queryKey: ["get-posts", page, limit],
 		queryFn: async () => {
-			const res = await $axios.get<IResponse$Axios<IPost[]>>("/article/getAll");
-			console.log("res.data.body", res);
-			setPosts(res.data.body);
+			const res = await $axios.get<
+				IResponse$Axios<IPaginatedResponse<IPost[]>>
+			>("/article/getAll", {
+				params: {
+					page,
+					limit,
+				},
+			});
+			setPosts(res.data.body.data);
+			console.log(res.data.body.data);
+
+			setTotal(res.data.body.total);
 			return res.data.body;
 		},
 	});
