@@ -5,6 +5,7 @@ import { Form } from "@/components/ui/form";
 import { useResetPassword } from "@/hooks/useAuth";
 import { passwordSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -39,6 +40,7 @@ export default function RecoveryAccount() {
 
 	return (
 		<div className='w-full h-screen flex justify-center items-center'>
+			{isPending && <Loader2 />}
 			<Card className='w-1/3 p-6 bg-secondary'>
 				<CardContent>
 					<h1 className='text-2xl font-bold'>Recovery Account</h1>
@@ -52,15 +54,22 @@ export default function RecoveryAccount() {
 								name='password'
 								label='New password'
 								placeholder='****'
+								disabled={isPending}
 							/>
 							<PasswordField
 								control={form.control}
 								name='confirmPassword'
 								label='Confirm password'
 								placeholder='****'
+								disabled={isPending}
 							/>
 							<div className='w-full flex justify-between'>
-								<Button size='lg' variant='secondary' type='submit'>
+								<Button
+									disabled={isPending}
+									size='lg'
+									variant='secondary'
+									type='submit'
+								>
 									Submit
 								</Button>
 							</div>
