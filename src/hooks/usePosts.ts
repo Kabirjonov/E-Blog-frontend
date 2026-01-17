@@ -34,18 +34,17 @@ export function useGetPosts() {
 }
 export function useGetPostById() {
 	const { id } = useParams<{ id: string }>();
-	return useQuery({
+	const { isLoading, data, error } = useQuery({
 		queryKey: ["getPostById", id],
 		enabled: !!id,
 		queryFn: async () => {
 			const res = await $axios.get<IResponse$Axios<IPost>>(
 				`/article/getById/${id}`
 			);
-			console.log(res.data.body);
-
 			return res.data.body;
 		},
 	});
+	return { isLoading, data, error };
 }
 export function useCreatePost() {
 	const { posts, setPosts } = postStore();

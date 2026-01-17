@@ -1,3 +1,4 @@
+import PostCardLoading from "@/components/shared/post.loading";
 import {
 	Card,
 	CardContent,
@@ -6,19 +7,21 @@ import {
 } from "@/components/ui/card";
 import { useGetPostById } from "@/hooks/usePosts";
 import { API_URL } from "@/http";
-import { Loader2, Mail, User } from "lucide-react";
+import { Mail, User } from "lucide-react";
 
 export default function PostById() {
-	const { data: post, isLoading, error } = useGetPostById();
-
-	if (error) return <h1>{String(error)}</h1>;
-	if (!post) return null;
+	const { data: post, isLoading } = useGetPostById();
+	if (!post || isLoading) {
+		return (
+			<div className='max-w-3xl mx-auto mt-40 flex w-full flex-col items-center justify-center'>
+				<PostCardLoading />
+			</div>
+		);
+	}
 	return (
-		<div className='max-w-3xl mx-auto flex h-screen w-full   flex-col items-center justify-center'>
-			{isLoading && <Loader2 />}
+		<div className='max-w-3xl mx-auto mt-40 flex w-full flex-col items-center justify-center'>
 			<Card className='overflow-hidden shadow-lg'>
-				{/* IMAGE */}
-				<div className='relative'>
+				<div className='z-0 relative'>
 					<img
 						src={`${API_URL}/${post.picture[0]}`}
 						alt={post.title}
@@ -29,7 +32,6 @@ export default function PostById() {
 						{post.title}
 					</h1>
 				</div>
-
 				<CardContent className='p-6 space-y-5'>
 					<div className='flex items-center gap-6 text-sm text-muted-foreground'>
 						<div className='flex items-center gap-2'>
@@ -45,7 +47,6 @@ export default function PostById() {
 
 					<CardTitle className='text-lg font-medium'>{post.subtitle}</CardTitle>
 
-					{/* DESCRIPTION */}
 					<CardDescription className='text-base leading-relaxed text-foreground'>
 						{post.description}
 					</CardDescription>

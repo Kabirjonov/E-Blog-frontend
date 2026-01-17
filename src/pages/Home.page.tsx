@@ -10,6 +10,7 @@ import type { IPost } from "@/types/article.type";
 export default function Home() {
 	const { posts } = postStore();
 	const { isLoading, error } = useGetPosts();
+
 	return (
 		<>
 			<div className='container max-w-4xl mx-auto mt-28'>

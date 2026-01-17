@@ -24,7 +24,7 @@ export default function Navbar() {
 	const logout = useLogout();
 	return (
 		<>
-			<div className='w-full h-24  fixed inset-0  shadow-sidebar-accent shadow-lg bg-background'>
+			<div className='w-full h-24 z-50 fixed inset-0  shadow-sidebar-accent shadow-lg bg-background'>
 				<div className='w-full h-full flex m-auto  justify-between items-center container'>
 					<Link
 						className='flex items-center justify-center gap-2 ml-2'

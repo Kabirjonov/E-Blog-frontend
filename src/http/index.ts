@@ -1,5 +1,5 @@
 import axios from "axios";
-export const API_URL = import.meta.env.BACKAND_API || "http://localhost:8000";
+export const API_URL = import.meta.env.BACKAND_API || "http://localhost:5000";
 console.log("BACKAND_API", import.meta.env.BACKAND_API);
 
 const $axios = axios.create({

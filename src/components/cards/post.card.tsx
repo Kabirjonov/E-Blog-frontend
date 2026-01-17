@@ -9,7 +9,6 @@ import {
 import { API_URL } from "@/http";
 import { Link } from "react-router-dom";
 import CardFooterComponent from "./cardFooter";
-
 interface IProps {
 	post: IPost;
 }
@@ -23,7 +22,6 @@ export default function PostCard({ post }: IProps) {
 			/>
 			<CardContent>
 				<CardTitle className='line-clamp-1 text-lg'>{post.title}</CardTitle>
-
 				<CardDescription className='line-clamp-2 mt-1 text-muted-foreground text-sm'>
 					{post.description}
 				</CardDescription>
